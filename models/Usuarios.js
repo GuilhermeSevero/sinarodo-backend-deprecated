@@ -11,15 +11,18 @@ export default (sequelize, DataType) => {
             type: DataType.STRING,
             allowNull: true,
             validate: {
-                notEmpty: false
-            }
+                notEmpty: false,
+                isEmail: true
+            },
+            unique: true
         },
         login: {
             type: DataType.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
-            }
+            },
+            unique: true
         },
         password: {
             type: DataType.STRING,
@@ -32,8 +35,10 @@ export default (sequelize, DataType) => {
             type: DataType.STRING,
             allowNull: true,
             validate: {
-                notEmpty: false
-            }
+                notEmpty: false,
+                isNumeric: { msg: 'Digite apenas os números do CPF' }
+            },
+            unique: true
         }
     },
     {
