@@ -3,7 +3,7 @@ import BooksController from '../controllers/books'
 export default (app) => {
     const booksController = new BooksController(app.datasource.models.Books)
     app.route('/books')
-        // .all(app.auth.authenticate())
+        .all(app.auth.authenticate())
         .get((req, res) => {
             booksController.getAll()
                 .then(result => {
@@ -18,8 +18,8 @@ export default (app) => {
                     res.json(result.data)
                 })
         })
-    app.route('/:id')
-        // .all(app.auth.authenticate())
+    app.route('/books/:id')
+        .all(app.auth.authenticate())
         .get((req, res) => {
             booksController.getById(req.params)
                 .then(result => {

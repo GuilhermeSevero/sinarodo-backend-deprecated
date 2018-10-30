@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import config from './config/config'
 import datasource from './config/datasource'
 import booksRouter from './routes/books'
-import usersRouter from './routes/users'
+import usuariosRouter from './routes/usuarios'
 import authRouter from './routes/auth'
 import autorization from './auth'
 
@@ -19,7 +19,7 @@ app.use(auth.initialize())
 app.auth = auth
 
 booksRouter(app)
-usersRouter(app)
+usuariosRouter(app)
 authRouter(app)
 
 export default app

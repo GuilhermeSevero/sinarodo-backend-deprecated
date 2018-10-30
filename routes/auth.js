@@ -1,23 +1,27 @@
 import HttpStatus from 'http-status'
 import jwt from 'jwt-simple'
+import crypto from 'crypto'
 
 export default app => {
     const config = app.config
-    const Users = app.datasource.models.Users
+    const Usuarios = app.datasource.models.Usuarios
 
     app.post('/token', (req, res) => {
-        if(req.body.email && req.body.password) {
-            const email = req.body.email
-            const password = req.body.email
-            Users.findOne({ where: { email }})
+        if(req.body.login && req.body.password) {
+            const login = req.body.login
+            const password = req.body.password
+            Usuarios.findOne({ where: { login } })
                 .then(user => {
-                    if(Users.isPassword(user.password, password)) {
+                    if(user.password === crypto.createHash('md5').update(password).digest("hex")) {
                         res.json({
                             token: jwt.encode({ id: user.id }, config.jwtSecret)
                         })
                     }
                 })
-                .catch(() => res.sendStatus(HttpStatus.UNAUTHORIZED))
+                .catch(error => {
+                    console.log(error)
+                    res.sendStatus(HttpStatus.UNAUTHORIZED)
+                })
         } else {
             res.sendStatus(httpStatus.UNAUTHORIZED)
         }

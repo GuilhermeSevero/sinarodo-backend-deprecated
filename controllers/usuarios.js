@@ -9,40 +9,40 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultR
     erro: message
 }, statusCode)
 
-class UsersController {
-    constructor(Users) {
-        this.Users = Users
+class UsuariosController {
+    constructor(Usuarios) {
+        this.Usuarios = Usuarios
     }
 
-    getAll() {
-        return this.Users.findAll({})
+    getAll(query) {
+        return this.Usuarios.findAll({ where: query })
             .then(result => defaultResponse(result))
             .catch(error => errorResponse(error.message))
     }
 
     getById(params) {
-        return this.Users.findOne({ where: params })
+        return this.Usuarios.findOne({ where: params })
             .then(result => defaultResponse(result))
             .catch(error => errorResponse(error.message))
     }
 
     create(data) {
-        return this.Users.create(data)
+        return this.Usuarios.create(data)
             .then(result => defaultResponse(result, HttpStatus.CREATED))
             .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY))
     }
 
     update(data, params) {
-        return this.Users.update(data, { where: params })
+        return this.Usuarios.update(data, { where: params })
             .then(result => defaultResponse(result))
             .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY))
     }
 
     delete(params) {
-        return this.Users.destroy({ where: params })
+        return this.Usuarios.destroy({ where: params })
             .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
             .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY))
     }
 }
 
-export default UsersController
+export default UsuariosController

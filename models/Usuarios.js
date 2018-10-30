@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 export default (sequelize, DataType) => {
-    return sequelize.define('Users', {
+    return sequelize.define('Usuarios', {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
@@ -30,9 +30,9 @@ export default (sequelize, DataType) => {
         },
         cpf: {
             type: DataType.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
-                notEmpty: true
+                notEmpty: false
             }
         }
     },
@@ -41,14 +41,6 @@ export default (sequelize, DataType) => {
             beforeCreate: user => {
                 user.set('password', crypto.createHash('md5').update(user.password).digest("hex"))
             }
-        },
-        classMethods: {
-            isPassword: (encodedPassword, password) => {
-                console.log('encodedPassword', encodedPassword)
-                console.log('password', password)
-                console.log(crypto.createHash('md5').update(password).digest("hex"))
-                return encodedPassword === crypto.createHash('md5').update(password).digest("hex")
-        }
         }
     })
 }
