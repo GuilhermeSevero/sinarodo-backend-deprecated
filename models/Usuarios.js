@@ -3,9 +3,19 @@ import crypto from 'crypto'
 export default (sequelize, DataType) => {
     return sequelize.define('Usuarios', {
         id: {
-            type: DataType.INTEGER,
+            type: DataType.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
+        },
+        nome: {
+            type: DataType.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            },
+            set(val) {
+              this.setDataValue('nome', val.toUpperCase());
+            }
         },
         email: {
             type: DataType.STRING,
@@ -39,6 +49,18 @@ export default (sequelize, DataType) => {
                 isNumeric: { msg: 'Digite apenas os números do CPF' }
             },
             unique: true
+        },
+        permissao: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            defaultValue: 3,
+            validate: {
+                notEmpty: false,
+                isIn:{
+                    args: [[1, 2, 3]],
+                    msg: 'Informe: 1-Admin; 2-Gerente; 3-Usuário'
+                }
+            }
         }
     },
     {

@@ -1,15 +1,16 @@
 export default (sequelize, DataType) => {
-    return sequelize.define('Books', {
+    return sequelize.define('Configuracoes', {
         id: {
-            type: DataType.INTEGER.UNSIGNED,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        nome: {
-            type: DataType.STRING,
+        valorPorPonto: {
+            type: DataType.DECIMAL(15, 2),
             allowNull: false,
+            defaultValue: 1.00,
             validate: {
-                notEmpty: true
+                notEmpty: false
             }
         }
     })

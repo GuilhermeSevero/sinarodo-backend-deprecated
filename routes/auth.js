@@ -1,21 +1,24 @@
 import HttpStatus from 'http-status'
 import jwt from 'jwt-simple'
 import crypto from 'crypto'
+import AplicativosController from '../controllers/aplicativos'
 
 export default app => {
     const config = app.config
-    const Usuarios = app.datasource.models.Usuarios
+    const aplicativosController = new AplicativosController(app.datasource.models.Aplicativos)
 
     app.post('/token', (req, res) => {
-        if(req.body.login && req.body.password) {
-            const login = req.body.login
+        if(req.body.app && req.body.password) {
+            const app = req.body.app
             const password = req.body.password
-            Usuarios.findOne({ where: { login } })
-                .then(user => {
-                    if(user.password === crypto.createHash('md5').update(password).digest("hex")) {
+            aplicativosController.getByApp(app)
+                .then(({ data }) => {
+                    if(data.password === crypto.createHash('md5').update(password).digest("hex")) {
                         res.json({
-                            token: jwt.encode({ id: user.id }, config.jwtSecret)
+                            token: jwt.encode({ id: data.id }, config.jwtSecret)
                         })
+                    } else {
+                        res.sendStatus(HttpStatus.UNAUTHORIZED)
                     }
                 })
                 .catch(error => {
@@ -23,7 +26,14 @@ export default app => {
                     res.sendStatus(HttpStatus.UNAUTHORIZED)
                 })
         } else {
-            res.sendStatus(httpStatus.UNAUTHORIZED)
+            res.sendStatus(HttpStatus.UNAUTHORIZED)
         }
+    })
+    app.post('/aplicativos', (req, res) => {
+        aplicativosController.create(req.body)
+            .then(result => {
+                res.status(result.statusCode)
+                res.json(result.data)
+            })
     })
 }

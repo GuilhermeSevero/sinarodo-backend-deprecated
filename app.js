@@ -5,6 +5,7 @@ import datasource from './config/datasource'
 import booksRouter from './routes/books'
 import usuariosRouter from './routes/usuarios'
 import authRouter from './routes/auth'
+import configuracoesRouter from './routes/configuracoes'
 import autorization from './auth'
 
 const app = express()
@@ -21,5 +22,6 @@ app.auth = auth
 booksRouter(app)
 usuariosRouter(app)
 authRouter(app)
+configuracoesRouter(app)
 
 export default app
