@@ -7,12 +7,23 @@ export default (sequelize, DataType) => {
             primaryKey: true,
             autoIncrement: true
         },
+        matricula: {
+            type: DataType.INTEGER.UNSIGNED,
+            allowNull: true
+        },
         nome: {
             type: DataType.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
             },
+            set(val) {
+              this.setDataValue('nome', val.toUpperCase());
+            }
+        },
+        apelido: {
+            type: DataType.STRING,
+            allowNull: true,
             set(val) {
               this.setDataValue('nome', val.toUpperCase());
             }
@@ -25,6 +36,13 @@ export default (sequelize, DataType) => {
                 isEmail: true
             },
             unique: true
+        },
+        telefone: {
+            type: DataType.STRING,
+            allowNull: true,
+            validate: {
+                notEmpty: false
+            }
         },
         login: {
             type: DataType.STRING,

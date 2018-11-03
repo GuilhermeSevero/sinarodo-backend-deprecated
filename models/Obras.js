@@ -1,7 +1,5 @@
-import app from '../app'
-
 export default (sequelize, DataType, ...t) => {
-    const Obras = sequelize.define('Obras', {
+    return sequelize.define('Obras', {
         id: {
             type: DataType.INTEGER.UNSIGNED,
             primaryKey: true,
@@ -22,5 +20,4 @@ export default (sequelize, DataType, ...t) => {
             }
         }
     })
-    return Obras
 }

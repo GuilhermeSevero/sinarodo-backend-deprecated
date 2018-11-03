@@ -10,6 +10,12 @@ const loadModels = (sequelize) => {
         const model = sequelize.import(path.join(dir, file))
         models[model.name] = model
     })
+
+    models.Obras.belongsTo(models.Usuarios, { foreignKey: 'supervisor' })
+
+    models.Usuarios.belongsTo(models.Funcoes, { foreignKey: 'funcao1' })
+    models.Usuarios.belongsTo(models.Funcoes, { foreignKey: 'funcao2' })
+
     return models
 }
 
