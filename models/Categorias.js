@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-    return sequelize.define('Funcoes', {
+    return sequelize.define('Categorias', {
         id: {
             type: DataType.BIGINT.UNSIGNED,
             primaryKey: true,
@@ -10,9 +10,15 @@ export default (sequelize, DataType) => {
             allowNull: false,
             validate: {
                 notEmpty: true
-            },
-            set(val) {
-              this.setDataValue('nome', val.toUpperCase());
+            }
+        },
+        peso: {
+            type: DataType.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                max: 100,
+                min: 0, 
             }
         }
     })

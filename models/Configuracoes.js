@@ -12,6 +12,14 @@ export default (sequelize, DataType) => {
             validate: {
                 notEmpty: false
             }
+        },
+        acrescimoEncarregado: {
+            type: DataType.DECIMAL(15, 2),
+            allowNull: false,
+            defaultValue: 10.00,
+            validate: {
+                notEmpty: false
+            }
         }
     })
 }

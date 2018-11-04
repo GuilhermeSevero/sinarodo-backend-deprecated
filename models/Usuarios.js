@@ -3,7 +3,7 @@ import crypto from 'crypto'
 export default (sequelize, DataType) => {
     return sequelize.define('Usuarios', {
         id: {
-            type: DataType.INTEGER.UNSIGNED,
+            type: DataType.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },

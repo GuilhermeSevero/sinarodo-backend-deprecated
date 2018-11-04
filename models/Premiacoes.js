@@ -1,43 +1,36 @@
-export default (sequelize, DataType, ...t) => {
-    return sequelize.define('Obras', {
+export default (sequelize, DataType) => {
+    return sequelize.define('Premiacoes', {
         id: {
             type: DataType.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
-        pedido: {
+        mesPeriodo: {
             type: DataType.INTEGER,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
-        dataLancamento: {
-            type: DataType.DATE,
+        anoPeriodo: {
+            type: DataType.INTEGER,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
-        dataInicio: {
-            type: DataType.DATE,
+        diasEmCampo: {
+            type: DataType.INTEGER,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
-        dataFinal: {
-            type: DataType.DATE,
-            allowNull: true,
+        nota: {
+            type: DataType.INTEGER,
+            allowNull: false,
             validate: {
-                notEmpty: false
-            }
-        },
-        observacao: {
-            type: DataType.TEXT,
-            allowNull: true,
-            validate: {
-                notEmpty: false
+                notEmpty: true
             }
         }
     })

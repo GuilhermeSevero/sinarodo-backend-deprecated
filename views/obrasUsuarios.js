@@ -1,32 +1,41 @@
-import ConfiguracoesController from '../controllers/books'
+import ObrasUsuariosController from '../controllers/obrasUsuarios'
 
 export default (app) => {
-    const configuracoesController = new ConfiguracoesController(app.datasource.models.Books)
-    app.route('/configuracoes/')
+    const obrasUsuariosController = new ObrasUsuariosController(app.datasource.models.ObrasUsuario)
+    app.route('/obrasUsuarios')
         .all(app.auth.authenticate())
         .get((req, res) => {
-            configuracoesController.getById(1)
+            obrasUsuariosController.getAll(req.query)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .post((req, res) => {
-            configuracoesController.create(req.body)
+            obrasUsuariosController.create(req.body)
+                .then(result => {
+                    res.status(result.statusCode)
+                    res.json(result.data)
+                })
+        })
+    app.route('/obrasUsuarios/:id')
+        .all(app.auth.authenticate())
+        .get((req, res) => {
+            obrasUsuariosController.getById(req.params)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .put((req, res) => {
-            configuracoesController.update(req.body, { id: 1})
+            obrasUsuariosController.update(req.body, req.params)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .delete((req, res) => {
-            configuracoesController.delete({ id: 1 })
+            obrasUsuariosController.delete(req.params)
                 .then(result => {
                     res.sendStatus(result.statusCode)
                 })

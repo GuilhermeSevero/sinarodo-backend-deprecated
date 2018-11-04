@@ -1,41 +1,41 @@
-import BooksController from '../controllers/books'
+import ObrasController from '../controllers/obras'
 
 export default (app) => {
-    const booksController = new BooksController(app.datasource.models.Books)
-    app.route('/books')
+    const obrasController = new ObrasController(app.datasource.models.Obras)
+    app.route('/obras')
         .all(app.auth.authenticate())
         .get((req, res) => {
-            booksController.getAll()
+            obrasController.getAll(req.query)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .post((req, res) => {
-            booksController.create(req.body)
+            obrasController.create(req.body)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
-    app.route('/books/:id')
+    app.route('/obras/:id')
         .all(app.auth.authenticate())
         .get((req, res) => {
-            booksController.getById(req.params)
+            obrasController.getById(req.params)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .put((req, res) => {
-            booksController.update(req.body, req.params)
+            obrasController.update(req.body, req.params)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
         })
         .delete((req, res) => {
-            booksController.delete(req.params)
+            obrasController.delete(req.params)
                 .then(result => {
                     res.sendStatus(result.statusCode)
                 })
