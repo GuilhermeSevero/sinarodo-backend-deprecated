@@ -42,7 +42,7 @@ export default (app) => {
     app.route('/usuarios/autenticar')
         .post((req, res) => {
             if (req.body.login && req.body.password) {
-                usuariosController.autenticarUsuarios(req.body)
+                usuariosController.autenticarUsuario(req.body)
                 .then(result => {
                     res.status(result.statusCode)
                     res.json(result.data)

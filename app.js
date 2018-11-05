@@ -3,7 +3,6 @@ import bodyParser from 'body-parser'
 import config from './config/config'
 import datasource from './config/datasource'
 import setRoutes from './routes'
-import autorization from './auth'
 
 const app = express()
 
