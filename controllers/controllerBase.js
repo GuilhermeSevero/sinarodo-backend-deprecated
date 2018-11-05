@@ -1,13 +1,42 @@
 import HttpStatus from 'http-status'
 import { defaultResponse, errorResponse } from '../config/responses'
 
+const getParametros = (parametros) => {
+    let page = 1
+    let perPage = 25
+    let sort = 'id'
+    let direction = 'ASC'
+    if (parametros.hasOwnProperty('page')) {
+        page = Number(parametros.page)
+        delete parametros.page
+    }
+    if (parametros.hasOwnProperty('perPage')) {
+        perPage = Number(parametros.perPage)
+        delete parametros.perPage
+    }
+    if (parametros.hasOwnProperty('sort')) {
+        direction = parametros.sort.endsWith('-') ? 'DESC' : 'ASC'
+        sort = parametros.sort.replace('+', '').replace('-', '')
+        delete parametros.sort
+    }
+
+    return { page, perPage, sort, direction }
+}
+
 class ControllerBase {
     constructor(Model) {
         this.Model = Model
     }
 
     getAll(where = {}) {
-        return this.Model.findAll({ where })
+        let { page, perPage, sort, direction } = getParametros(where)
+
+        return this.Model.findAll({
+            where,
+            offset: (page * perPage) - perPage,
+            limit: perPage,
+            order: [[sort, direction]]
+        })
             .then(result => defaultResponse(result))
             .catch(error => errorResponse(error.message))
     }
@@ -19,7 +48,6 @@ class ControllerBase {
     }
 
     create(data) {
-        data.id = 1 // só pode existir um
         return this.Model.create(data)
             .then(result => defaultResponse(result, HttpStatus.CREATED))
             .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY))

@@ -9,7 +9,7 @@ export default (app) => {
         next();
     });
 
-    const dir = path.join(__dirname, './views')
+    const dir = path.join(__dirname, '../views')
     fs.readdirSync(dir).forEach(file => {
         let rota = require(path.join(dir, file))
         rota.default(app)

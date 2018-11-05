@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import config from './config/config'
 import datasource from './config/datasource'
-import setRoutes from './routes'
+import setRoutes from './config/routes'
 
 const app = express()
 
