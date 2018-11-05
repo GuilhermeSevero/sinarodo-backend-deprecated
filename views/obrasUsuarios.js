@@ -3,7 +3,6 @@ import ObrasUsuariosController from '../controllers/obrasUsuarios'
 export default (app) => {
     const obrasUsuariosController = new ObrasUsuariosController(app.datasource.models.ObrasUsuario)
     app.route('/obrasUsuarios')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             obrasUsuariosController.getAll(req.query)
                 .then(result => {
@@ -19,7 +18,6 @@ export default (app) => {
                 })
         })
     app.route('/obrasUsuarios/:id')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             obrasUsuariosController.getById(req.params)
                 .then(result => {

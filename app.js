@@ -12,10 +12,6 @@ app.datasource = datasource(app)
 app.set('port', 8000)
 app.use(bodyParser.json())
 
-const auth = autorization(app)
-app.use(auth.initialize())
-app.auth = auth
-
 setRoutes(app)
 
 export default app

@@ -3,7 +3,6 @@ import FuncoesController from '../controllers/funcoes'
 export default (app) => {
     const funcoesController = new FuncoesController(app.datasource.models.Funcoes)
     app.route('/funcoes')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             funcoesController.getAll(req.query)
                 .then(result => {
@@ -19,7 +18,6 @@ export default (app) => {
                 })
         })
     app.route('/funcoes/:id')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             funcoesController.getById(req.params)
                 .then(result => {

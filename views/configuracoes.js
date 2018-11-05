@@ -3,7 +3,6 @@ import ConfiguracoesController from '../controllers/configuracoes'
 export default (app) => {
     const configuracoesController = new ConfiguracoesController(app.datasource.models.Configuracoes)
     app.route('/configuracoes/')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             configuracoesController.getById(1)
                 .then(result => {

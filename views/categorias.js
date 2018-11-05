@@ -3,7 +3,6 @@ import CategoriasController from '../controllers/categorias'
 export default (app) => {
     const categoriasController = new CategoriasController(app.datasource.models.Categorias)
     app.route('/categorias')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             categoriasController.getAll(req.query)
                 .then(result => {
@@ -19,7 +18,6 @@ export default (app) => {
                 })
         })
     app.route('/categorias/:id')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             categoriasController.getById(req.params)
                 .then(result => {

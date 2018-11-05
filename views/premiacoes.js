@@ -3,7 +3,6 @@ import PremiacoesController from '../controllers/premiacoes'
 export default (app) => {
     const premiacoesController = new PremiacoesController(app.datasource.models.Premiacoes)
     app.route('/premiacoes')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             premiacoesController.getAll(req.query)
                 .then(result => {
@@ -19,7 +18,6 @@ export default (app) => {
                 })
         })
     app.route('/premiacoes/:id')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             premiacoesController.getById(req.params)
                 .then(result => {

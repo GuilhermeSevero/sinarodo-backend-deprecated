@@ -3,7 +3,6 @@ import ObrasController from '../controllers/obras'
 export default (app) => {
     const obrasController = new ObrasController(app.datasource.models.Obras)
     app.route('/obras')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             obrasController.getAll(req.query)
                 .then(result => {
@@ -19,7 +18,6 @@ export default (app) => {
                 })
         })
     app.route('/obras/:id')
-        .all(app.auth.authenticate())
         .get((req, res) => {
             obrasController.getById(req.params)
                 .then(result => {
