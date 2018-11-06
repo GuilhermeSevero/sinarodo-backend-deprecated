@@ -1,6 +1,6 @@
 import crypto from 'crypto'
-import ControllerBase from './controllerBase'
-import { defaultResponse, errorResponse } from '../config/responses'
+import ControllerBase from '../classes/Controller'
+import { defaultResponse, errorResponse } from '../classes/Responses'
 
 class UsuariosController extends ControllerBase {
     autenticarUsuario({ login, password }) {

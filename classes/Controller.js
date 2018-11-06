@@ -1,43 +1,44 @@
 import HttpStatus from 'http-status'
-import { defaultResponse, errorResponse } from '../config/responses'
-
-const getParametros = (parametros) => {
-    let page = 1
-    let perPage = 25
-    let sort = 'id'
-    let direction = 'ASC'
-    if (parametros.hasOwnProperty('page')) {
-        page = Number(parametros.page)
-        delete parametros.page
-    }
-    if (parametros.hasOwnProperty('perPage')) {
-        perPage = Number(parametros.perPage)
-        delete parametros.perPage
-    }
-    if (parametros.hasOwnProperty('sort')) {
-        direction = parametros.sort.endsWith('-') ? 'DESC' : 'ASC'
-        sort = parametros.sort.replace('+', '').replace('-', '')
-        delete parametros.sort
-    }
-
-    return { page, perPage, sort, direction }
-}
+import { defaultResponse, errorResponse } from './Responses'
 
 class ControllerBase {
     constructor(Model) {
         this.Model = Model
     }
 
-    getAll(where = {}) {
-        let { page, perPage, sort, direction } = getParametros(where)
+    $getParametros(parametros) {
+        let page = 1
+        let perPage = 25
+        let sort = 'id'
+        let direction = 'ASC'
+        
+        if (parametros.hasOwnProperty('page')) {
+            page = Number(parametros.page)
+            delete parametros.page
+        }
+        if (parametros.hasOwnProperty('perPage')) {
+            perPage = Number(parametros.perPage)
+            delete parametros.perPage
+        }
+        if (parametros.hasOwnProperty('sort')) {
+            direction = parametros.sort.endsWith('-') ? 'DESC' : 'ASC'
+            sort = parametros.sort.replace('+', '').replace('-', '')
+            delete parametros.sort
+        }
+    
+        return { page, perPage, sort, direction }
+    }
 
-        return this.Model.findAll({
+    getAll(where = {}) {
+        let { page, perPage, sort, direction } = this.$getParametros(where)
+
+        return this.Model.findAndCountAll ({
             where,
             offset: (page * perPage) - perPage,
             limit: perPage,
             order: [[sort, direction]]
         })
-            .then(result => defaultResponse(result))
+            .then(result => defaultResponse(result.rows, HttpStatus.OK, result.count))
             .catch(error => errorResponse(error.message))
     }
 

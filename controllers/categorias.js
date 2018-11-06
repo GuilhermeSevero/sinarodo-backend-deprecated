@@ -1,4 +1,4 @@
-import ControllerBase from './controllerBase'
+import ControllerBase from '../classes/Controller'
 
 class CategoriasController extends ControllerBase {
 }

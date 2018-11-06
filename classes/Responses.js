@@ -1,7 +1,8 @@
 import HttpStatus from 'http-status'
 
-const defaultResponse = (data, statusCode = HttpStatus.OK) => ({
+const defaultResponse = (data, statusCode = HttpStatus.OK, count = 1) => ({
     data,
+    count,
     statusCode
 })
 
