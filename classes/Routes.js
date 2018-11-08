@@ -3,7 +3,7 @@ export default (app, controller, route) => {
         .get((req, res) => {
             controller.getAll(req.query)
                 .then(result => {
-                    res.setHeader('x-rows', result.count)
+                    // res.header('X-Count', result.count)
                     res.status(result.statusCode)
                     res.json(result.data)
                 })
