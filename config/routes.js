@@ -6,6 +6,7 @@ export default (app) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, DELETE');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header('Access-Control-Expose-Headers', 'X-Page, X-Per-Page, X-Total')
         next();
     });
 
